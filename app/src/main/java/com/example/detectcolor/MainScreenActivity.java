@@ -18,18 +18,10 @@ import androidx.core.content.ContextCompat;
 public class MainScreenActivity extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_CODE = 200;
 
-    TextView redtv,greentv, bluetv;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
-
-
-        redtv=findViewById(R.id.redtextView);
-        greentv=findViewById(R.id.greentextView);
-        bluetv=findViewById(R.id.bluetextView);
 
         if (checkPermission()) {
             Intent intent = new Intent(MainScreenActivity.this, Main2Activity.class);
@@ -59,12 +51,10 @@ public class MainScreenActivity extends AppCompatActivity {
             case PERMISSION_REQUEST_CODE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Toast.makeText(getApplicationContext(), "Permission Granted!", Toast.LENGTH_SHORT).show();
-
-                    /* after permission given start the camera */
                     Intent intent = new Intent(MainScreenActivity.this, Main2Activity.class);
                     startActivity(intent);
 
-                } else { /* permission denied display need permissions */
+                } else {
                     Toast.makeText(getApplicationContext(), "Permission Denied!", Toast.LENGTH_SHORT).show();
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
@@ -94,6 +84,4 @@ public class MainScreenActivity extends AppCompatActivity {
                 .show();
     }
 
-
 }
-
