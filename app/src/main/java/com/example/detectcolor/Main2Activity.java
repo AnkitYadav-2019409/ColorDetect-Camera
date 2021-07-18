@@ -50,7 +50,7 @@ public class Main2Activity extends Activity implements Callback,OnClickListener 
     private Camera camera=null;
     private Button flipCamera;
     private Button flashCameraButton;
-    private Button captureImageButton;
+    // private Button captureImageButton;
     private int cameraId;
     private boolean flashmode = false;
     private int rotation;
@@ -70,7 +70,7 @@ public class Main2Activity extends Activity implements Callback,OnClickListener 
         cameraId = CameraInfo.CAMERA_FACING_BACK;
         flipCamera = (Button) findViewById(R.id.flipCamera);
         flashCameraButton = (Button) findViewById(R.id.flash);
-        captureImageButton=(Button)findViewById(R.id.button);
+
         surfaceView = (SurfaceView) findViewById(R.id.surfaceView);
         surfaceHolder = surfaceView.getHolder();//surface holder objects
         surfaceHolder.addCallback(this);
@@ -78,7 +78,6 @@ public class Main2Activity extends Activity implements Callback,OnClickListener 
         /* listener buttons */
         flipCamera.setOnClickListener(this);
         flashCameraButton.setOnClickListener(this);
-        captureImageButton.setOnClickListener(this);
 
         redtv=findViewById(R.id.redtextView);
         greentv=findViewById(R.id.greentextView);
@@ -242,13 +241,8 @@ public class Main2Activity extends Activity implements Callback,OnClickListener 
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
         camera.startPreview();
         try {
-            if(captureImageButton.isSelected())
-            {
-                camera.setPreviewCallback(null);
-            }else{
-                camera.setPreviewCallback(Main2Activity.this);
-                camera.setPreviewDisplay(holder);
-            }
+            camera.setPreviewCallback(Main2Activity.this);
+            camera.setPreviewDisplay(holder);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -271,14 +265,6 @@ public class Main2Activity extends Activity implements Callback,OnClickListener 
             case R.id.flipCamera:
                 flipCamera();
                 break;
-            case R.id.button:
-
-                Uri webpage = Uri.parse("https://www.theilabs.com/");
-                Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(intent);
-                }
-                Log.d("Tag","What is this behaviour ??!");
             default:
                 break;
 
@@ -376,13 +362,6 @@ public class Main2Activity extends Activity implements Callback,OnClickListener 
                  color_name = header_row[1];
 
              }
-
-            // System.out.println("Red: " + red_from_list + ", Green: " + green_from_list + ", Blue: " + blue_from_list);
-
-//            for(int j=0; j<header_row.length; j++) {
-//                System.out.print(header_row[j] + ", ");
-//            }
-//            System.out.println();
         }
 
         return color_name;
@@ -412,12 +391,6 @@ public class Main2Activity extends Activity implements Callback,OnClickListener 
 
 
         String color_name = getColorName(redValue, blueValue, greenValue);
-
-
-//        if(redValue <100  && greenValue<100 && blueValue<100  && flashmode==false){
-//
-//            Toast.makeText(this, "Turn on Flash" , Toast.LENGTH_SHORT).show();
-//        }
 
         redtv.setText(Integer.toString(redValue));
         greentv.setText(Integer.toString(greenValue));
